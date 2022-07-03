@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- CSS -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+    <!-- My own stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <title>App Sucursales</title>
+  </head>
+  <body>
+    <h1>CRUD de empleados</h1>
+
+    <div class="container mt-4 shadow-lg p-3 mb-5 bg-body rounded">
+        <button id="btnCrear" type="button" class="btn btn-primary" data-bs-toggle="modal">Crear</button>
+        <table id="tablaEmpleados" class="table mt-2 table-bordered table-striped">
+            <thead>
+                <tr class="text-center">
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Genero</th>
+                    <th>Puesto</th>
+                    <th>Sucursal</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    
+    
+    
+    <div class="modal fade" id="modalEmpleado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="exampleModalLabel">Nuevo Empleado</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="nombre" class="col-form-label">Nombre:</label>
+                <input type="text" class="form-control" id="nombre">
+              </div>
+              <div class="mb-3">
+                <label for="genero" class="col-form-label">Genero:</label>
+                <input type="text" class="form-control" id="genero">
+              </div>
+              <div class="mb-3">
+                <label for="puesto" class="col-form-label">Puesto:</label>
+                <input type="text" class="form-control" id="puesto">                
+              </div>
+              <div class="mb-3">
+                <label for="sucursal" class="col-form-label">Sucursal:</label>
+                <input type="number" class="form-control" id="sucursal">
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Bootstrap script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+    
+    <!-- JavaScript alertify-->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <!-- My own script -->
+    <script src="code.js"></script>
+
+  </body>
+</html>
