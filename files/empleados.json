@@ -1,0 +1,37 @@
+ [
+    {
+        "id_empleado": 1,
+        "nombre_empleado": "Juan Perez",
+        "genero_empleado": "Masculino",
+        "puesto_empleado": "Tesorero",
+        "sucursal_empleado": 22
+    },
+    {
+        "id_empleado": 2,
+        "nombre_empleado": "Ana Marote",
+        "genero_empleado": "Femenino",
+        "puesto_empleado": "Gerenta",
+        "sucursal_empleado": 22
+    },
+    {
+        "id_empleado": 3,
+        "nombre_empleado": "Leia Oriana",
+        "genero_empleado": "Femenino",
+        "puesto_empleado": "Supervisora Comercial",
+        "sucursal_empleado": 22
+    },
+    {
+        "id_empleado": 4,
+        "nombre_empleado": "Pedro Escamoso",
+        "genero_empleado": "Masculino",
+        "puesto_empleado": "Cajero",
+        "sucursal_empleado": 22
+    },
+    {
+        "id_empleado": 5,
+        "nombre_empleado": "Ana Lisa Melano",
+        "genero_empleado": "Femenino",
+        "puesto_empleado": "Plataforma",
+        "sucursal_empleado": 22
+    }
+]
