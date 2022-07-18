@@ -1,23 +1,11 @@
 
 // Declaro los empleados y las sucursales
-
-const sucursales = [
-    {
-        id_sucursal: 22,
-        nombre_sucursal: "Once",
-        direccion_sucursal: "Rivadavia 1200",
-        cajas_total: 4,
-        plataformas_total: 4
-    },
-    {
-        id_sucursal: 111,
-        nombre_sucursal: "Centro",
-        direccion_sucursal: "Florida 100",
-        cajas_total: 14,
-        plataformas_total: 20
-    }
-]
-
+const sucursales = []
+let storage = null
+storage = [{"id_sucursal": 1, "nombre_sucursal": 1,"direccion_sucursal":1,"cajas_total":1,"plataformas_total":1}]
+window.addEventListener('DOMContentLoaded', (e) => {
+    storage = localStorage.getItem("sucurasles")
+    })
 class Sucursal{
     constructor(id_sucursal, nombre_sucursal, direccion_sucursal, cajas_total, plataformas_total){
         this.id_sucursal = id_sucursal
@@ -32,6 +20,9 @@ function inicializarElementos(){
     contenedorSucursales = document.querySelector('#tablaSucursales tbody')
     formSucursal = document.querySelector('form')
     btnCrearSucursal = document.querySelector("#btnCrearSucursal")
+    window.addEventListener('DOMContentLoaded', (e) => {
+    storage = localStorage.getItem("sucurasles")
+    })
 }
 
 // Funcion crear sucursal
@@ -43,19 +34,20 @@ function crearSucursal(){
     let plataformas_total = parseInt(prompt("Ingrese la cantidad de plataformas"))
     
     let objSucursal = new Sucursal(id_sucursal, nombre_sucursal, direccion_sucursal, cajas_total, plataformas_total)
-    sucursales.push(objSucursal)    
+    storage.push(objSucursal)    
 }
 
 btnCrearSucursal.addEventListener('click', ()=>{    
-    crearSucursal()    
+    crearSucursal()
+    renovarStorage();
     mostrarSucursales()    
 })
 
 
 //  Funcion para mostrar los resultaros
-function mostrarSucursales(){   
+function mostrarSucursales(){       
     resultados = ''    
-    sucursales.forEach(sucursal => {
+    storage.forEach(sucursal => {
         resultados += `
                         <tr>
                             <td>${sucursal.id_sucursal}</td>
@@ -79,9 +71,15 @@ function limpiarTablaSucursales(){
     }
     
 }     
+
+function renovarStorage(){
+    localStorage.removeItem("sucursales");
+    localStorage.setItem("sucursales", JSON.stringify(storage))
+}
+
 function main(){
     inicializarElementos();    
-    mostrarSucursales();    
+    mostrarSucursales();   
 }
 
 main()
