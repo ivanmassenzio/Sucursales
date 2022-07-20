@@ -7,5 +7,7 @@ function saveData()
     alert(name || "El usuario no existe");
     localStorage.setItem('name',name);
     localStorage.setItem('pswd',pswd);
-    window.location.href="/pages/home.html"
+    if (name){
+        window.location.href="/pages/home.html"
+    }    
 }
