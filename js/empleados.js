@@ -1,23 +1,4 @@
-class Empleado{
-    constructor(id_empleado, nombre_empleado, genero_empleado, puesto_empleado, sucursal_empleado){
-        this.id_empleado = id_empleado
-        this.nombre_empleado = nombre_empleado
-        this.genero_empleado = genero_empleado
-        this.puesto_empleado = puesto_empleado
-        this.sucursal_empleado = sucursal_empleado
-    }
-}
-
-function inicializarElementos(){    
-    contenedorEmpleados = document.querySelector('#tablaEmpleados tbody')
-    formEmpleado = document.querySelector('form')
-    modalEmpleado = new bootstrap.Modal(document.getElementById('modalEmpleado'))    
-    nombre = document.getElementById('nombre')
-    genero = document.getElementById('genero')
-    puesto = document.getElementById('puesto')
-    sucursal = document.getElementById('sucursal')
-    // btnCrearEmpleado = document.querySelector("#btnCrearEmpleado")
-}
+const url = 'http://localhost:3000/api/empleados/'
 const contenedorEmpleados = document.querySelector('#tablaEmpleados tbody')
 const formEmpleado = document.querySelector('form')
 const modalEmpleado = new bootstrap.Modal(document.getElementById('modalEmpleado'))    
@@ -26,18 +7,7 @@ const genero = document.getElementById('genero')
 const puesto = document.getElementById('puesto')
 const sucursal = document.getElementById('sucursal')
 let opcion = ''
-
-// Funcion crear empleado
-function crearEmpleado(){    
-    let id_empleado = parseInt(prompt("Ingrese el id"))
-    let nombre_empleado = prompt("Ingrese el nombre")
-    let genero_empleado = prompt("Ingrese el genero")
-    let puesto_empleado = prompt("Ingrese el puesto")
-    let sucursal_empleado = parseInt(prompt("Ingrese la sucursal"))
-    
-    let objEmpleado = new Empleado(id_empleado, nombre_empleado, genero_empleado, puesto_empleado, sucursal_empleado)
-    empleados.push(objEmpleado)
-}
+let resultados = ''
 
 btnCrearEmpleado.addEventListener('click', ()=>{
     nombre.value = ''
@@ -47,17 +17,17 @@ btnCrearEmpleado.addEventListener('click', ()=>{
     modalEmpleado.show()
     opcion = 'crear'
 })
-    
-const mostrarEmpleados = (empleados) => {   
-    resultados = ''    
-    empleados.forEach(empleado => {
+
+// funcion para mostrar los resultados
+const mostrarEmpleados = (empleados) => {           
+    empleados.forEach(empleado => {        
         resultados += `
                         <tr>
                             <td>${empleado.id_empleado}</td>
-                            <td>${empleado.nombre_empleado}</td>
-                            <td>${empleado.genero_empleado}</td>
-                            <td>${empleado.puesto_empleado}</td>
-                            <td>${empleado.sucursal_empleado}</td>
+                            <td>${empleado.nombre}</td>
+                            <td>${empleado.genero}</td>
+                            <td>${empleado.puesto}</td>
+                            <td>${empleado.sucursal}</td>
                             <td class="text-center"><a class="btnEditar btn btn-primary">Editar</a><a class="btnBorrar btn btn-danger">Borrar</a></td>
                         </tr>
                     `
@@ -65,15 +35,8 @@ const mostrarEmpleados = (empleados) => {
      contenedorEmpleados.innerHTML = resultados
 }
 
-// function limpiarTablaEmpleados(){
-//     const divEmpleados = document.querySelector("#tablaEmpleados tbody")
-//     while(divEmpleados.firstChild) {
-//         divEmpleados.removeChild(divEmpleados.firstChild);
-//     }
-    
-// }
 //Procedimiento Mostrar registros
-fetch('../files/empleados.json')
+fetch(url)
     .then( response => response.json() )
     .then( data => mostrarEmpleados(data) )
     .catch( error => console.log(error) )
@@ -85,23 +48,89 @@ const on = (element, event, selector, handler) => {
         }
     })
 }
-
+// Procedimiento borrar
 on(document, 'click', '.btnBorrar', e => {
     const fila = e.target.parentNode.parentNode
     const id = fila.firstElementChild.innerHTML
-    alertify.confirm("This is a confirm dialog.",
+    alertify.confirm("Esta seguro que desea eliminar?",
     function(){
-        alertify.success('Ok');
+        fetch(url+id, {
+            method: 'DELETE'
+        })
+        .then( res => res.json() )
+        .then( ()=> location.reload())
     },
     function(){
-        alertify.error('Cancel');
+        alertify.error('Cancelado');
     })
 })
+
+let idForm = 0
+on(document, 'click', '.btnEditar', e => {    
+    const fila = e.target.parentNode.parentNode
+    idForm = fila.children[0].innerHTML
+    const nombreForm = fila.children[1].innerHTML
+    const generoForm = fila.children[2].innerHTML
+    const puestoForm = fila.children[3].innerHTML
+    const sucursalForm = fila.children[4].innerHTML
+    nombre.value =  nombreForm
+    genero.value =  generoForm
+    puesto.value =  puestoForm
+    sucursal.value = sucursalForm
+    opcion = 'editar'
+    modalEmpleado.show()
+     
+})
+
+//Procedimiento para Crear y Editar
+formEmpleado.addEventListener('submit', (e)=>{
+    e.preventDefault()
+    if(opcion=='crear'){        
+        //console.log('OPCION CREAR')
+        fetch(url, {
+            method:'POST',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                nombre:nombre.value,
+                genero:genero.value,
+                puesto:puesto.value,
+                sucursal:sucursal.value
+            })
+        })
+        .then( response => response.json() )
+        .then( data => {
+            const nuevoEmpleado = []
+            nuevoEmpleado.push(data)
+            mostrarEmpleados(nuevoEmpleado)
+        })
+    }
+    if(opcion=='editar'){    
+        console.log(url+idForm)
+        fetch(url+idForm,{
+            method: 'PUT',
+            headers: {
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({
+                nombre:nombre.value,
+                genero:genero.value,
+                puesto:puesto.value,
+                sucursal:sucursal.value
+            })
+        })
+        .then( response => response.json() )
+        .then( response => location.reload() )
+    }
+    modalEmpleado.hide()
+})
+
 
 
      
 function main(){
-    inicializarElementos();    
+    // inicializarElementos();    
     // mostrarEmpleados();    
 }
 
