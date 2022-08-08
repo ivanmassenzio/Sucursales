@@ -9,6 +9,7 @@ const sucursal = document.getElementById('sucursal')
 let opcion = ''
 let resultados = ''
 
+// Boton para crear empleados
 btnCrearEmpleado.addEventListener('click', ()=>{
     nombre.value = ''
     genero.value = ''
@@ -86,7 +87,6 @@ on(document, 'click', '.btnEditar', e => {
 formEmpleado.addEventListener('submit', (e)=>{
     e.preventDefault()
     if(opcion=='crear'){        
-        //console.log('OPCION CREAR')
         fetch(url, {
             method:'POST',
             headers: {
@@ -125,13 +125,3 @@ formEmpleado.addEventListener('submit', (e)=>{
     }
     modalEmpleado.hide()
 })
-
-
-
-     
-function main(){
-    // inicializarElementos();    
-    // mostrarEmpleados();    
-}
-
-// main()
